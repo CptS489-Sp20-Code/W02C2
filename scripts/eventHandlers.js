@@ -9,12 +9,12 @@
   //menu bottom disabled, UI mode = login
   function startUp() {
     //Hide all pages except for Login Page, which is the start page.
-    document.getElementById("feedModeDiv").style.display = "none";
-    document.getElementById("followedUsersDiv").style.display = "none";
-    document.getElementById("roundsModeDiv").style.display = "none";
-    document.getElementById("logRoundDiv").style.display = "none";
-    document.getElementById("coursesModeDiv").style.display = "none";
-    document.getElementById("searchCourseDiv").style.display = "none";
+    for (var i = 0; i < modes.length; ++i) {
+      var pages = document.getElementsByClassName(modes[i] + "Div");
+      for (var j = 0; j < pages.length; ++j) {
+        pages[j].style.display = "none"
+      }
+    }
     document.getElementById("loginModeDiv").style.display = "block";
 
     //Clear all text from email and password fields
@@ -22,7 +22,7 @@
     document.getElementById("passwordInput").value = "";
 
     //Set top bar text
-    document.getElementById("topBarTitle").textContent = "Welcome to Speedgolf App";
+    document.getElementById("topBarTitle").textContent = "Welcome to SpeedScore";
 
     //Hide the bottom bar initially
     document.getElementById("bottomBar").style.visibility = "hidden";
@@ -82,25 +82,31 @@ document.getElementById("menuBtn").addEventListener("click",function(e) {
 //need to toggle the mode.
 var bottomBarBtnClick = function() {
   if (mode != this.id) {
-    var prevMode = mode;
-    mode = this.id;
-    //Change mode button:
-    document.getElementById(prevMode).classList.remove("menuItemSelected");
-    this.classList.add("menuItemSelected");
-    //Change page title:
-    document.getElementById("topBarTitle").textContent = modeToTitle[mode];
-    //Change page content
-    document.getElementById(prevMode + "Div").style.display = "none";
-    document.getElementById(mode + "Div").style.display = "block";
-    //Change menu items:
-    var oldItems = document.getElementsByClassName(prevMode + "Item");
-    var newItems = document.getElementsByClassName(mode + "Item");
-    //Uses for loop:
-    for (var i = 0; i < oldItems.length; ++i) {
-      oldItems[i].style.display = "none";
-    }
-    for (var i = 0; i < newItems.length; ++i) {
-      newItems[i].style.display = "block";
+    if (mode != this.id) {
+      var prevMode = mode;
+      mode = this.id;
+      //Change mode button:
+      document.getElementById(prevMode).classList.remove("menuItemSelected");
+      this.classList.add("menuItemSelected");
+      //Change page title:
+      document.getElementById("topBarTitle").textContent = modeToTitle[mode];
+      //Change page content
+      //Hide pages from previous mode
+      var currPages = document.getElementsByClassName(prevMode + "Div");
+      for (var i = 0; i < currPages.length; ++i) {
+        currPages[i].style.display = "none";
+      }
+      //Show main page in current mode
+      document.getElementById(mode + "MainDiv").style.display = "block";
+      //Change menu items:
+      var oldItems = document.getElementsByClassName(prevMode + "Item");
+      var newItems = document.getElementsByClassName(mode + "Item");
+          for (var i = 0; i < oldItems.length; ++i) {
+        oldItems[i].style.display = "none";
+      }
+      for (var i = 0; i < newItems.length; ++i) {
+        newItems[i].style.display = "block";
+      }
     }
   }
 }
@@ -119,14 +125,17 @@ function login() {
   document.getElementById("feedMode").classList.add("menuItemSelected");
   document.getElementById("roundsMode").classList.remove("menuItemSelected");
   document.getElementById("coursesMode").classList.remove("menuItemSelected");
-  
+  //Change mode
+  mode = "feedMode"
   //Change title bar to Activity Feed
-  document.getElementById("topBarTitle").textContent = "Activity Feed";
-  //Show only the feed mode menu items
-  var menuItems = document.getElementsByClassName("menuItem");
-  for (var i = 0; i < menuItems.length; ++i) {
-    menuItems[i].style.display = "none";
+  document.getElementById("topBarTitle").textContent = modeToTitle[mode];
+  //Show only the current mode menu items
+  var modeItems = document.getElementsByClassName("modeItem");
+  //Hide _all_ mode items
+  for (var i = 0; i < modeItems.length; ++i) {
+    modeItems[i].style.display = "none";
   }
+   //Show current mode items
   var feedItems = document.getElementsByClassName("feedModeItem");
   for (var i = 0; i < feedItems.length; ++i) {
     feedItems[i].style.display = "block";
@@ -134,9 +143,7 @@ function login() {
 
   //hide login screen and show feed screen
   document.getElementById("loginModeDiv").style.display = "none";
-  document.getElementById("feedModeDiv").style.display = "block";
-    //Set mode to feedMode
-  mode = "feedMode";
+  document.getElementById(mode + "MainDiv").style.display = "block";
 }
 
 //loginInterface submit: When the login button is clicked, we rely on form

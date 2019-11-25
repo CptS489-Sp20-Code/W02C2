@@ -12,6 +12,9 @@ var modeToTitle = {"feedMode": "Activity Feed",
                    "coursesMode": "Speedgolf Courses",
                    "loginMode": "Welcome to Speedgolf App"};
 
+//Array of app modes -- useful for iterating through mode pages
+var modes = ["loginMode","feedMode","roundsMode","coursesMode"];
+
 //Bind bottomBarBtnClick function to all elements of class bottomBarBtn
 var bottomBtns = document.getElementsByClassName("bottomBarBtn");
 for (var i = 0; i < bottomBtns.length; ++i) {
