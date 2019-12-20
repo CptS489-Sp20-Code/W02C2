@@ -12,13 +12,24 @@ var modeToTitle = {"feedMode": "Activity Feed",
                    "coursesMode": "Speedgolf Courses",
                    "loginMode": "Welcome to Speedgolf App"};
 
-//Array of app modes -- useful for iterating through mode pages
-var modes = ["loginMode","feedMode","roundsMode","coursesMode"];
-
 //Bind bottomBarBtnClick function to all elements of class bottomBarBtn
 var bottomBtns = document.getElementsByClassName("bottomBarBtn");
 for (var i = 0; i < bottomBtns.length; ++i) {
     bottomBtns[i].addEventListener("click",bottomBarBtnClick);
 }
-//Execute function to set start state of app
-startUp();
+
+//Hide all pages except for Activity Feed, which is the start page.
+document.getElementById("feedModeDiv").style.display = "none";
+document.getElementById("followedUsersDiv").style.display = "none";
+document.getElementById("roundsModeDiv").style.display = "none";
+document.getElementById("logRoundDiv").style.display = "none";
+document.getElementById("coursesModeDiv").style.display = "none";
+document.getElementById("searchCourseDiv").style.display = "none";
+
+//Hide bottom bar
+document.getElementById("bottomBar").style.display = "none";
+
+//On startup, set current app mode to "login mode"
+var mode = "loginMode"; //Variable captures current UI mode\
+//Disable menu button:
+document.getElementById("menuBtn").disabled = true;
