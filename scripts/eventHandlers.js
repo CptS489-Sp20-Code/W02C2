@@ -57,40 +57,6 @@ if (mode != this.id) {
 }
 }
 
-//login -- This function sets the initial app state after login. It is called
-//from setTimeout after the button spinner has commenced.bottombar
-function login() {
-//Stop spinner
-document.getElementById("loginBtnIcon").classList.remove("fas","fa-spinner","fa-spin");
-
-//Enable menu button:
-document.getElementById("menuBtn").disabled = false;
-
-//Show bottom bar buttons and highlight feed mode button
-document.getElementById("bottomBar").style.visibility = "visible";
-document.getElementById("feedMode").classList.add("menuItemSelected");
-document.getElementById("roundsMode").classList.remove("menuItemSelected");
-document.getElementById("coursesMode").classList.remove("menuItemSelected");
-
-//Change title bar to Activity Feed
-document.getElementById("topBarTitle").textContent = "Activity Feed";
-//Show only the feed mode menu items
-var menuItems = document.getElementsByClassName("menuItem");
-for (var i = 0; i < menuItems.length; ++i) {
-  menuItems[i].style.display = "none";
-}
-var feedItems = document.getElementsByClassName("feedModeItem");
-for (var i = 0; i < feedItems.length; ++i) {
-  feedItems[i].style.display = "block";
-}
-
-//hide login screen and show feed screen
-document.getElementById("loginModeDiv").style.display = "none";
-document.getElementById("feedModeDiv").style.display = "block";
-  //Set mode to feedMode
-mode = "feedMode";
-}
-
 //loginInterface submit: When the login button is clicked, we rely on form
 //pattern matching to ensure validity of username and password. To log in, we
 //switch the mode to "feedMode" and make the necessary UI and state changes.
